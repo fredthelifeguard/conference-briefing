@@ -2,7 +2,8 @@
 // Secrets: ANTHROPIC_API_KEY (wrangler secret put ANTHROPIC_API_KEY)
 // Vars:    ALLOWED_ORIGIN  e.g. https://<user>.github.io  (set in wrangler.toml)
 //          MODEL           default claude-sonnet-4-5
-//          RATE_LIMIT      requests per IP per minute, default 10 (needs the KV binding below)
+//          RATE_LIMIT      requests per IP per minute for the KV fallback, default 10
+// Binding: RATE_LIMITER    [[ratelimits]] in wrangler.toml (preferred rate limiter)
 //
 // Request:  POST { system: string, question: string, max_tokens?: number }
 // Response: text/plain stream of the answer (the site renders it as it arrives).
@@ -26,9 +27,14 @@ export default {
     if (req.method !== "POST") return json(405, { code: "upstream_error" });
     if (!ok) return json(403, { code: "not_granted" });
 
-    // Per-IP rate limit (optional: skipped when no KV namespace is bound).
-    if (env.RATE_KV) {
-      const ip = req.headers.get("CF-Connecting-IP") || "anon";
+    // Per-IP rate limit. Prefers the Workers Rate Limiting binding (RATE_LIMITER,
+    // exact counting); falls back to KV if only RATE_KV is bound. KV reads are
+    // cached for 60s so the KV counter is approximate at best.
+    const ip = req.headers.get("CF-Connecting-IP") || "anon";
+    if (env.RATE_LIMITER) {
+      const { success } = await env.RATE_LIMITER.limit({ key: ip });
+      if (!success) return json(429, { code: "rate_limited" });
+    } else if (env.RATE_KV) {
       const key = `rl:${ip}:${Math.floor(Date.now() / 60000)}`;
       const n = parseInt((await env.RATE_KV.get(key)) || "0", 10) + 1;
       await env.RATE_KV.put(key, String(n), { expirationTtl: 120 });
