@@ -1,0 +1,40 @@
+:root{
+/* Base — Forester green. Official corporate color: Pantone 343, hex #005244 (brand guide p4) */
+--hu-green-900:#003630;
+--hu-green-800:#005244; /* PRIMARY — Pantone 343 C, CMYK 95/15/62/58 */
+--hu-green-700:#00573D; /* poster-sampled variant */
+--hu-green-600:#227C66;
+--hu-green-300:#7AAA9C;
+--hu-green-100:#E3EEE9;
+--hu-green-50:#F2F7F5;
+/* Neutrals — official black is Pantone Black C #1E1E1E (CMYK 30/30/30/100) */
+--hu-black:#1E1E1E;
+--hu-silver:#8A8D8F; /* Pantone 877 Metallic approximation — no official hex (guide lists N/A) */
+--hu-ink:#231F20;
+--hu-gray-700:#545454;
+--hu-gray-500:#737373;
+--hu-gray-400:#B1B3B6;
+--hu-gray-300:#B4B4B4;
+--hu-gray-200:#D9D9D9;
+--hu-gray-100:#EFEFEF;
+--hu-white:#FFFFFF;
+/* Accent — used only for urgent emphasis (asterisk notes) */
+--hu-red:#FF0013;
+/* Semantic aliases */
+--text-body:var(--hu-black);
+--text-heading:var(--hu-green-800);
+--text-muted:var(--hu-gray-700);
+--text-inverse:var(--hu-white);
+--text-urgent:var(--hu-red);
+--surface-page:var(--hu-white);
+--surface-card:var(--hu-white);
+--surface-tint:var(--hu-green-50);
+--surface-brand:var(--hu-green-800);
+--surface-brand-strong:var(--hu-green-900);
+--border-default:var(--hu-gray-200);
+--border-strong:var(--hu-black);
+--border-brand:var(--hu-green-800);
+--link:var(--hu-green-800);
+--link-hover:var(--hu-green-600);
+--focus-ring:var(--hu-green-600);
+}

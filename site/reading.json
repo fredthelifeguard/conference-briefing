@@ -1,0 +1,42 @@
+{
+"groups": [
+ {"title": "Named across sessions", "sum": "Works that more than one speaker reached for, often without knowing the others had.", "items": [
+  {"title": "The Technological Society", "note": "and “technique” generally", "author": "Jacques Ellul", "where": "Soong, STEM 2 Q&A, Santos Q&A, Crouch"},
+  {"title": "Lectures on Calvinism", "note": "The Stone Lectures", "author": "Abraham Kuyper", "where": "Soong; Wondergem’s “square inch” line"},
+  {"title": "Magnifica Humanitas", "note": "Encyclical", "author": "Pope Leo XIV", "where": "Soong, Sullivan"},
+  {"title": "Tools for Conviviality", "note": "", "author": "Ivan Illich", "where": "Santos; Crouch names him"},
+  {"title": "Understanding Media", "note": "“The medium is the message”; title not said", "author": "Marshall McLuhan", "where": "Soong, Crouch"},
+  {"title": "Confessions and De Doctrina Christiana", "note": "", "author": "Augustine", "where": "Soong; McClain Q&A"}
+ ]},
+ {"title": "Cited repeatedly within one session", "sum": "A speaker’s touchstone, returned to more than once in a single talk.", "items": [
+  {"title": "Shop Class as Soulcraft and Why We Drive", "note": "", "author": "Matthew Crawford", "where": "McClain, about five times"},
+  {"title": "Three Mile an Hour God", "note": "", "author": "Kosuke Koyama", "where": "Crouch’s central image, plus a questioner"},
+  {"title": "The AI Mirror", "note": "", "author": "Shannon Vallor", "where": "Soong, twice"},
+  {"title": "The Eye of the Master", "note": "", "author": "Matteo Pasquinelli", "where": "STEM 2, two different people"}
+ ]},
+ {"title": "Mentioned once", "sum": "", "items": [
+  {"title": "Power and Progress", "note": "", "author": "Daron Acemoglu and Simon Johnson", "where": "Soong"},
+  {"title": "Dominion", "note": "", "author": "Tom Holland", "where": "Soong"},
+  {"title": "The Air We Breathe", "note": "", "author": "Glen Scrivener", "where": "Soong"},
+  {"title": "The Weight of Glory", "note": "", "author": "C.S. Lewis", "where": "Soong"},
+  {"title": "Westminster Shorter Catechism", "note": "", "author": "", "where": "Soong"},
+  {"title": "Protagoras", "note": "", "author": "Plato", "where": "Sullivan"},
+  {"title": "The Language Animal", "note": "", "author": "Charles Taylor", "where": "Santos Q&A"},
+  {"title": "The Myth of the Machine", "note": "", "author": "Lewis Mumford", "where": "Santos"},
+  {"title": "Frankenstein", "note": "", "author": "Mary Shelley", "where": "Santos"},
+  {"title": "When Old Technologies Were New", "note": "", "author": "Carolyn Marvin", "where": "Good and Lafe"},
+  {"title": "Make Room for TV", "note": "", "author": "Lynn Spigel", "where": "Good and Lafe"},
+  {"title": "On Writing Well", "note": "", "author": "William Zinsser", "where": "McClain"},
+  {"title": "Steering the Craft", "note": "", "author": "Ursula K. Le Guin", "where": "McClain"},
+  {"title": "The Elements of Style", "note": "", "author": "Strunk and White", "where": "Olsen’s response"},
+  {"title": "Co-Intelligence", "note": "", "author": "Ethan Mollick", "where": "McClain Q&A"},
+  {"title": "Prolegomena to Any Future Metaphysics", "note": "", "author": "Immanuel Kant", "where": "McClain, as a joke"},
+  {"title": "1 Maccabees", "note": "", "author": "Bible, Protestant Apocrypha", "where": "Crouch Q&A"}
+ ]}
+],
+"own": [
+ {"speaker": "van-duinen", "title": "AI and literacy instruction for secondary teachers", "note": "With co-authors. Out next year."},
+ {"speaker": "wondergem", "title": "A book on wisdom", "note": "In progress."},
+ {"speaker": "mcginnis", "title": "Stories from a t-Shaped Engineer", "note": "Title to confirm against the copy he handed out."}
+]
+}

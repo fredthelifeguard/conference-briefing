@@ -1,0 +1,27 @@
+:root{
+--font-sans:'Poppins',ui-sans-serif,system-ui,'Segoe UI',sans-serif;
+--font-display:var(--font-sans);
+/* Official print faces (brand guide p6). Garamond -> EB Garamond, Trajan -> Cinzel: Google Fonts SUBSTITUTES */
+--font-serif:'EB Garamond',Garamond,'Times New Roman',serif; /* body copy in documents/publications */
+--font-trajan:'Cinzel','Trajan Pro',serif; /* caps-only headlines/subheads, sparingly */
+--font-helvetica:Helvetica,Arial,sans-serif; /* sidebars, captions, sparingly */
+/* Weights actually used in HU collateral */
+--weight-regular:400;
+--weight-medium:500;
+--weight-semibold:600;
+--weight-bold:700;
+/* Scale */
+--text-xs:12px;
+--text-sm:14px;
+--text-base:16px;
+--text-lg:18px;
+--text-xl:22px;
+--text-2xl:28px;
+--text-3xl:36px;
+--text-4xl:48px;
+--leading-tight:1.15;
+--leading-snug:1.3;
+--leading-normal:1.5;
+/* Display headers are ALL CAPS with wide-ish tracking */
+--tracking-caps:0.02em;
+}

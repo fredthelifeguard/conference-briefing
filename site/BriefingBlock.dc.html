@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/huntington-university-design-system-2253e86d-73a7-4c96-93a1-f6e44f724ea8/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/huntington-university-design-system-2253e86d-73a7-4c96-93a1-f6e44f724ea8/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/huntington-university-design-system-2253e86d-73a7-4c96-93a1-f6e44f724ea8/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/huntington-university-design-system-2253e86d-73a7-4c96-93a1-f6e44f724ea8/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/huntington-university-design-system-2253e86d-73a7-4c96-93a1-f6e44f724ea8/tokens/base.css">
+  <link rel="stylesheet" href="_ds/huntington-university-design-system-2253e86d-73a7-4c96-93a1-f6e44f724ea8/styles.css">
+  <script src="_ds/huntington-university-design-system-2253e86d-73a7-4c96-93a1-f6e44f724ea8/_ds_bundle.js"></script>
+</helmet>
+<article id="{{ b.domId }}" style="display:flex;flex-direction:column;gap:10px;padding:20px 0;min-height:140px;box-sizing:border-box;border-bottom:1px solid var(--border-default);font-family:var(--font-sans);color:var(--text-body)">
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Badge" variant="{{ b.badge }}" hint-size="72px,24px">{{ b.typeLabel }}</x-import>
+    <span style="font-size:12px;font-weight:500;color:var(--text-muted);letter-spacing:0.04em">{{ b.id }}</span>
+  </div>
+  <sc-if value="{{ b.isQuote }}" hint-placeholder-val="{{ false }}">
+    <p style="font-family:var(--font-serif);font-size:18px;line-height:1.55;margin:0;max-width:66ch;color:var(--hu-black);text-wrap:pretty">{{ b.text }}</p>
+  </sc-if>
+  <sc-if value="{{ b.notQuote }}" hint-placeholder-val="{{ true }}">
+    <p style="margin:0;max-width:66ch;font-size:16px;line-height:1.55;text-wrap:pretty">{{ b.text }}</p>
+  </sc-if>
+  <sc-if value="{{ b.hasCtx }}" hint-placeholder-val="{{ false }}">
+    <p style="margin:0;max-width:66ch;font-size:14px;color:var(--text-muted);line-height:1.5">{{ b.ctx }}</p>
+  </sc-if>
+  <sc-if value="{{ b.showPlain }}" hint-placeholder-val="{{ false }}">
+    <p style="margin:0;max-width:66ch;font-size:15px;line-height:1.5;background:var(--surface-tint);padding:8px 12px;border-radius:var(--radius-sm)"><span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-heading);margin-right:8px">In plain words</span>{{ b.plain }}</p>
+  </sc-if>
+  <sc-if value="{{ b.hasChart }}" hint-placeholder-val="{{ false }}">
+    <figure style="margin:4px 0 0;padding:14px 16px;background:var(--surface-tint);border-radius:var(--radius-sm);max-width:66ch;box-sizing:border-box">
+      <figcaption style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-heading);margin-bottom:10px">{{ b.chart.title }}</figcaption>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:8px 12px;align-items:end;font-size:13px">
+        <sc-for list="{{ b.chart.bars }}" as="r" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="color:var(--text-body);line-height:1.3">{{ r.label }}</span><div style="height:8px;background:var(--hu-gray-200);border-radius:2px;overflow:hidden"><div style="height:100%;border-radius:2px;width:{{ r.pct }}%;background:{{ r.color }}"></div></div></div>
+          <span style="font-weight:600;text-align:right;color:var(--text-heading);white-space:nowrap">{{ r.display }}</span>
+        </sc-for>
+      </div>
+    </figure>
+  </sc-if>
+  <p style="margin:auto 0 0;padding-top:4px;font-size:13px;color:var(--text-muted);display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline">
+    <sc-if value="{{ b.hasSession }}" hint-placeholder-val="{{ true }}">
+      <a href="{{ b.whoHref }}" style="color:var(--link);font-weight:600;text-decoration:none" style-hover="text-decoration:underline">{{ b.who }}</a>
+      <a href="{{ b.sessionHref }}" style="color:var(--text-muted);text-decoration:none" style-hover="text-decoration:underline;color:var(--link)">{{ b.srcMeta }}</a>
+    </sc-if>
+    <sc-if value="{{ b.noSession }}" hint-placeholder-val="{{ false }}">
+      <span>This page's analysis, not a speaker</span>
+    </sc-if>
+    <sc-if value="{{ b.showTheme }}" hint-placeholder-val="{{ false }}">
+      <span>·</span>
+      <a href="{{ b.themeHref }}" style="color:var(--link);text-decoration:none" style-hover="text-decoration:underline">{{ b.themeName }}</a>
+    </sc-if>
+  </p>
+</article>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:200},&quot;b&quot;:{&quot;editor&quot;:null,&quot;default&quot;:{&quot;id&quot;:&quot;B01&quot;,&quot;prefix&quot;:&quot;blk-&quot;,&quot;domId&quot;:&quot;blk-B01&quot;,&quot;isQuote&quot;:true,&quot;notQuote&quot;:false,&quot;typeLabel&quot;:&quot;Quote&quot;,&quot;badge&quot;:&quot;solid&quot;,&quot;text&quot;:&quot;“You get to do the hard thing. The friction is the point.”&quot;,&quot;hasCtx&quot;:true,&quot;ctx&quot;:&quot;On moving students from “I have to do my homework” to “I get to.”&quot;,&quot;showPlain&quot;:false,&quot;plain&quot;:&quot;&quot;,&quot;hasSession&quot;:true,&quot;noSession&quot;:false,&quot;who&quot;:&quot;Michael McGinnis&quot;,&quot;whoHref&quot;:&quot;#/speakers/mcginnis&quot;,&quot;srcMeta&quot;:&quot;Fri 10:50 AM, STEM track&quot;,&quot;sessionHref&quot;:&quot;#/sessions/S08&quot;,&quot;showTheme&quot;:true,&quot;themeName&quot;:&quot;The friction is the point&quot;,&quot;themeHref&quot;:&quot;#/themes/formation&quot;,&quot;hasChart&quot;:false},&quot;tsType&quot;:&quot;object&quot;}}"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# Cloudflare Worker (ask-proxy)
+node_modules/
+.wrangler/
+.dev.vars
+*.log
+
+# macOS
+.DS_Store

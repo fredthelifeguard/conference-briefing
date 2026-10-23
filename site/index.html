@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Wisdom in the Age of AI · Conference briefing</title>
+  <link rel="stylesheet" href="_ds/huntington-university-design-system-2253e86d-73a7-4c96-93a1-f6e44f724ea8/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/huntington-university-design-system-2253e86d-73a7-4c96-93a1-f6e44f724ea8/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/huntington-university-design-system-2253e86d-73a7-4c96-93a1-f6e44f724ea8/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/huntington-university-design-system-2253e86d-73a7-4c96-93a1-f6e44f724ea8/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/huntington-university-design-system-2253e86d-73a7-4c96-93a1-f6e44f724ea8/tokens/base.css">
+  <link rel="stylesheet" href="_ds/huntington-university-design-system-2253e86d-73a7-4c96-93a1-f6e44f724ea8/styles.css">
+  <script src="_ds/huntington-university-design-system-2253e86d-73a7-4c96-93a1-f6e44f724ea8/_ds_bundle.js"></script>
+  <script src="config.js"></script>
+  <style>
+    body{margin:0;background:var(--surface-page);color:var(--text-body);font-family:var(--font-sans)}
+    a{color:var(--link)} a:hover{color:var(--link-hover)}
+    :focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+    summary::-webkit-details-marker{color:var(--hu-green-800)}
+    @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+  </style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;font-family:var(--font-sans)">
+
+  <!-- Top bar -->
+  <header style="background:var(--surface-brand);color:var(--text-inverse)">
+    <div style="max-width:1040px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <a href="#/" style="display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--text-inverse)">
+        <span style="font-size:13px;line-height:1.3;font-weight:500;opacity:0.95;padding:6px 0">Conference briefing<br><span style="font-weight:400;opacity:0.85">Wisdom in the Age of AI</span></span>
+      </a>
+      <nav aria-label="Site" style="display:flex;gap:2px;flex-wrap:wrap;margin-left:auto">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
+          <sc-if value="{{ n.active }}" hint-placeholder-val="{{ false }}">
+            <a href="{{ n.href }}" aria-current="page" style="color:var(--text-inverse);text-decoration:none;font-size:14px;font-weight:600;padding:9px 12px;border-radius:var(--radius-sm);background:rgba(255,255,255,0.16);display:block;white-space:nowrap">{{ n.label }}</a>
+          </sc-if>
+          <sc-if value="{{ n.inactive }}" hint-placeholder-val="{{ true }}">
+            <a href="{{ n.href }}" style="color:var(--text-inverse);text-decoration:none;font-size:14px;font-weight:500;padding:9px 12px;border-radius:var(--radius-sm);display:block;white-space:nowrap" style-hover="background:rgba(255,255,255,0.1)">{{ n.label }}</a>
+          </sc-if>
+        </sc-for>
+        <a href="{{ mentiUrl }}" target="_blank" rel="noopener" style="color:var(--text-inverse);text-decoration:none;font-size:14px;font-weight:600;padding:8px 12px;border-radius:var(--radius-sm);border:1px solid rgba(255,255,255,0.5);display:block;margin-left:6px;white-space:nowrap" style-hover="background:rgba(255,255,255,0.12)">Ask Justin</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Breadcrumb + plain words -->
+  <div style="background:var(--surface-tint);border-bottom:1px solid var(--border-default)">
+    <div style="max-width:1040px;margin:0 auto;padding:8px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px">
+      <nav aria-label="Breadcrumb" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;color:var(--text-muted)">
+        <sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="1">
+          <sc-if value="{{ c.sep }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true">›</span></sc-if>
+          <sc-if value="{{ c.isLink }}" hint-placeholder-val="{{ false }}"><a href="{{ c.href }}" style="color:var(--link);text-decoration:none;font-weight:500" style-hover="text-decoration:underline">{{ c.label }}</a></sc-if>
+          <sc-if value="{{ c.isText }}" hint-placeholder-val="{{ true }}"><span style="color:var(--text-body);font-weight:500">{{ c.label }}</span></sc-if>
+        </sc-for>
+      </nav>
+      <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Checkbox" label="Plain words" checked="{{ plain }}" on-change="{{ onPlain }}" style="{{ smallCheck }}" hint-size="120px,24px"></x-import>
+    </div>
+  </div>
+
+  <main style="flex:1;max-width:1040px;width:100%;margin:0 auto;padding:0 24px 64px;box-sizing:border-box" aria-live="polite">
+
+    <sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}">
+      <p style="padding:48px 0;color:var(--text-muted)">Loading the notes…</p>
+    </sc-if>
+
+    <!-- HOME -->
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Home" style="padding:56px 0 24px;max-width:760px">
+        <p style="margin:0 0 14px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">Conference briefing · Calvin University · October 8 to 10, 2026</p>
+        <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="1" hint-size="100%,48px">Wisdom in the Age of AI</x-import>
+        <p style="font-size:20px;line-height:1.45;margin:22px 0 14px;max-width:34em;text-wrap:pretty">One set of conference notes, rebuilt for whoever is reading. Pick who you are and how much you want, or wander through the themes and sessions.</p>
+        <p style="font-size:15px;color:var(--text-muted);margin:0;max-width:46em;line-height:1.55">Compiled by Justin, Huntington University IT, from recordings of twenty sessions. Built as “liquid content,” an idea from the closing keynote: the notes are stored as small blocks with rules attached, and the page rearranges them without rewriting them.</p>
+      </section>
+
+      <sc-if value="{{ hasSample }}" hint-placeholder-val="{{ false }}">
+        <section style="padding:8px 0 16px;max-width:760px">
+          <div style="background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:18px;box-shadow:var(--shadow-card)">
+            <p style="margin:0 0 10px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-heading)">Have a question? Ask it in your own words</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:stretch">
+              <input type="text" aria-label="Your question" placeholder="For example: what did the speakers say about banning AI in class?" value="{{ askQ }}" onChange="{{ onAskInput }}" onKeyDown="{{ onHomeAskKey }}" style="flex:1 1 320px;min-width:0;border:1px solid var(--border-default);border-radius:var(--radius-sm);padding:10px 12px;font:inherit;font-size:16px;color:var(--text-body);background:var(--surface-page)">
+              <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Button" variant="primary" on-click="{{ homeAsk }}" hint-size="auto,42px">Ask the Conference</x-import>
+            </div>
+            <p style="margin:10px 0 0;font-size:13px;color:var(--text-muted)">The Conference answers from the blocks on this site and nothing else, cites each one it uses, and pulls those blocks up under the answer.</p>
+          </div>
+        </section>
+      </sc-if>
+
+      <section style="padding:8px 0 16px;max-width:760px">
+        <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Card" tint="{{ true }}" title="I have a question for Justin" hint-size="100%,120px">
+          <div style="display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+            <p style="margin:0;max-width:46ch;line-height:1.5">Drop it in the Menti. Questions appear on the screen as a word cloud while we talk.</p>
+            <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+              <sc-if value="{{ hasMentiCode }}" hint-placeholder-val="{{ false }}"></sc-if>
+              <a href="{{ mentiUrl }}" target="_blank" rel="noopener" style="text-decoration:none"><x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Button" variant="primary" hint-size="auto,42px">Ask Justin</x-import></a>
+            </div>
+          </div>
+        </x-import>
+      </section>
+
+      <section style="padding:32px 0 8px">
+        <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="2" shadow="{{ false }}" hint-size="100%,34px">Start with who you are</x-import>
+        <p style="margin:8px 0 20px;color:var(--text-muted);max-width:60ch">Each role gets the same blocks in a different order, with notes written for that seat.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));grid-auto-rows:1fr;gap:16px">
+          <sc-for list="{{ readerCards }}" as="r" hint-placeholder-count="6">
+            <a href="{{ r.href }}" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;min-height:100%;box-sizing:border-box;background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);box-shadow:var(--shadow-card);padding:var(--space-5);transition:transform .15s" style-hover="transform:translateY(-2px)">
+              <div style="font-family:var(--font-sans);font-size:var(--text-base);font-weight:var(--weight-bold);text-transform:uppercase;letter-spacing:0.02em;color:var(--text-heading);margin-bottom:10px">{{ r.name }}</div>
+              <p style="margin:0 0 14px;font-size:15px;line-height:1.5;color:var(--text-body);text-wrap:pretty">{{ r.first }}</p>
+              <span style="margin-top:auto;font-size:14px;font-weight:600;color:var(--link)">Read the briefing →</span>
+            </a>
+          </sc-for>
+        </div>
+      </section>
+
+      <section style="padding:40px 0 8px">
+        <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="2" shadow="{{ false }}" hint-size="100%,34px">Or wander</x-import>
+        <p style="margin:8px 0 20px;color:var(--text-muted);max-width:60ch">Every block links to the theme it belongs to and the session it came from, so any door leads to the others.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));grid-auto-rows:1fr;gap:16px">
+          <sc-for list="{{ doors }}" as="d" hint-placeholder-count="3">
+            <a href="{{ d.href }}" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;min-height:100%;box-sizing:border-box;background:var(--surface-tint);border:1px solid var(--border-default);border-radius:var(--radius-md);box-shadow:var(--shadow-card);padding:var(--space-5);transition:transform .15s" style-hover="transform:translateY(-2px)">
+              <div style="font-size:40px;font-weight:700;line-height:1;color:var(--text-heading);margin-bottom:8px">{{ d.count }}</div>
+              <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;color:var(--text-heading);margin-bottom:6px">{{ d.label }}</div>
+              <p style="margin:0;font-size:14px;color:var(--text-muted);line-height:1.45">{{ d.sum }}</p>
+            </a>
+          </sc-for>
+        </div>
+      </section>
+
+      <section style="padding:40px 0 0;max-width:760px">
+        <p style="margin:0 0 12px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">The rules each block follows</p>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:15px">
+          <div style="display:flex;gap:12px;align-items:baseline"><x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Badge" variant="solid" hint-size="60px,24px">Quote</x-import><span>Word for word from the recording.</span></div>
+          <div style="display:flex;gap:12px;align-items:baseline"><x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Badge" variant="tint" hint-size="60px,24px">Figure · Reported</x-import><span>Figures and reported ideas keep the speaker's name.</span></div>
+          <div style="display:flex;gap:12px;align-items:baseline"><x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Badge" variant="outline" hint-size="60px,24px">Open question · Synthesis</x-import><span>This page's own analysis. No speaker said it.</span></div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- READER -->
+    <sc-if value="{{ isReader }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Briefing" style="padding:36px 0 0">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:28px" role="group" aria-label="Role">
+          <span style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-right:6px">Role</span>
+          <sc-for list="{{ lensChips }}" as="c" hint-placeholder-count="6">
+            <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Button" variant="{{ c.variant }}" size="sm" on-click="{{ c.go }}" hint-size="auto,32px">{{ c.label }}</x-import>
+          </sc-for>
+        </div>
+        <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">{{ fmtKicker }}</p>
+        <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="1" hint-size="100%,48px">{{ readerName }}</x-import>
+        <p style="font-size:18px;line-height:1.5;margin:20px 0 28px;max-width:62ch;text-wrap:pretty">{{ readerIntro }}</p>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:14px 0;border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)" role="group" aria-label="Format">
+          <span style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-right:6px">Format</span>
+          <sc-for list="{{ fmtTabs }}" as="f" hint-placeholder-count="4">
+            <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Button" variant="{{ f.variant }}" size="sm" on-click="{{ f.go }}" hint-size="auto,32px">{{ f.label }}</x-import>
+          </sc-for>
+        </div>
+        <p style="margin:12px 0 0;font-size:14px;color:var(--text-muted)">{{ fmtDesc }}</p>
+      </section>
+
+      <sc-if value="{{ isBrief }}" hint-placeholder-val="{{ true }}">
+        <section style="margin-top:36px">
+          <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="3" shadow="{{ false }}" hint-size="100%,28px">Start with these</x-import>
+          <p style="margin:6px 0 8px;color:var(--text-muted)">{{ briefSum }}</p>
+          <div style="border-top:1px solid var(--border-default)">
+            <sc-for list="{{ briefPick }}" as="b" hint-placeholder-count="8"><dc-import name="BriefingBlock" b="{{ b }}" hint-size="100%,120px"></dc-import></sc-for>
+          </div>
+        </section>
+        <section style="margin-top:40px">
+          <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="3" shadow="{{ false }}" hint-size="100%,28px">Before you rely on it</x-import>
+          <p style="margin:6px 0 8px;color:var(--text-muted)">Two things the conference left unsettled.</p>
+          <div style="border-top:1px solid var(--border-default)">
+            <sc-for list="{{ briefTensions }}" as="b" hint-placeholder-count="2"><dc-import name="BriefingBlock" b="{{ b }}" hint-size="100%,120px"></dc-import></sc-for>
+          </div>
+        </section>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:28px">
+          <sc-for list="{{ briefNext }}" as="n" hint-placeholder-count="3">
+            <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Button" variant="secondary" on-click="{{ n.go }}" hint-size="auto,40px">{{ n.label }}</x-import>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDeep }}" hint-placeholder-val="{{ false }}">
+        <figure style="margin:32px 0 0;padding:16px 20px;background:var(--surface-tint);border-radius:var(--radius-sm);max-width:640px;box-sizing:border-box">
+          <figcaption style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-heading);margin-bottom:12px">{{ deepChart.title }}</figcaption>
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) 40px;gap:8px 12px;align-items:end;font-size:13px">
+            <sc-for list="{{ deepChart.bars }}" as="r" hint-placeholder-count="8">
+              <div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="line-height:1.3">{{ r.label }}</span><div style="height:8px;background:var(--hu-gray-200);border-radius:2px;overflow:hidden"><div style="height:100%;border-radius:2px;background:var(--hu-green-800);width:{{ r.pct }}%"></div></div></div>
+              <span style="font-weight:600;text-align:right;color:var(--text-heading)">{{ r.display }}</span>
+            </sc-for>
+          </div>
+        </figure>
+        <sc-for list="{{ deepThemes }}" as="t" hint-placeholder-count="8">
+          <section style="margin-top:44px">
+            <a href="{{ t.href }}" style="text-decoration:none;display:inline-block" style-hover="text-decoration:underline"><x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="3" shadow="{{ false }}" hint-size="100%,28px">{{ t.name }}</x-import></a>
+            <p style="margin:6px 0 0;color:var(--text-muted);max-width:64ch">{{ t.sum }}</p>
+            <sc-if value="{{ t.hasNote }}" hint-placeholder-val="{{ false }}">
+              <p style="background:var(--surface-tint);border-radius:var(--radius-sm);padding:10px 14px;margin:14px 0 0;max-width:68ch;font-size:15px;line-height:1.5"><b style="color:var(--text-heading)">{{ t.noteLead }}</b>{{ t.note }}</p>
+            </sc-if>
+            <sc-if value="{{ t.hasMine }}" hint-placeholder-val="{{ true }}">
+              <div style="margin-top:14px;border-top:1px solid var(--border-default)">
+                <sc-for list="{{ t.mine }}" as="b" hint-placeholder-count="2"><dc-import name="BriefingBlock" b="{{ b }}" hint-size="100%,120px"></dc-import></sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ t.hasRest }}" hint-placeholder-val="{{ false }}">
+              <details style="margin-top:12px">
+                <summary style="cursor:pointer;color:var(--link);font-size:14px;font-weight:600;padding:4px 0">{{ t.restLabel }}</summary>
+                <div style="margin-top:6px;border-top:1px solid var(--border-default)">
+                  <sc-for list="{{ t.rest }}" as="b" hint-placeholder-count="2"><dc-import name="BriefingBlock" b="{{ b }}" hint-size="100%,120px"></dc-import></sc-for>
+                </div>
+              </details>
+            </sc-if>
+          </section>
+        </sc-for>
+      </sc-if>
+
+      <sc-if value="{{ isMonday }}" hint-placeholder-val="{{ false }}">
+        <section style="margin-top:36px">
+          <p style="margin:0 0 8px;color:var(--text-muted);max-width:64ch">Suggested starting points, drafted for discussion. No speaker proposed these. Each one lists the blocks it rests on.</p>
+          <ol style="list-style:none;margin:0;padding:0;border-top:1px solid var(--border-default)">
+            <sc-for list="{{ mondayActions }}" as="a" hint-placeholder-count="6">
+              <li style="display:grid;grid-template-columns:40px minmax(0,1fr);padding:16px 0;border-bottom:1px solid var(--border-default)">
+                <span style="font-size:14px;font-weight:600;color:var(--text-heading);padding-top:3px">{{ a.n }}</span>
+                <div>
+                  <p style="font-size:17px;font-weight:500;margin:0;max-width:62ch;text-wrap:pretty">{{ a.t }}</p>
+                  <details style="margin-top:6px">
+                    <summary style="cursor:pointer;color:var(--link);font-size:14px;font-weight:600">{{ a.why }}</summary>
+                    <div style="margin-top:4px">
+                      <sc-for list="{{ a.blocks }}" as="b" hint-placeholder-count="2"><dc-import name="BriefingBlock" b="{{ b }}" hint-size="100%,120px"></dc-import></sc-for>
+                    </div>
+                  </details>
+                </div>
+              </li>
+            </sc-for>
+          </ol>
+        </section>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:28px">
+          <sc-for list="{{ mondayNext }}" as="n" hint-placeholder-count="2">
+            <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Button" variant="secondary" on-click="{{ n.go }}" hint-size="auto,40px">{{ n.label }}</x-import>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isSkeptic }}" hint-placeholder-val="{{ false }}">
+        <section style="margin-top:36px">
+          <p style="margin:0 0 8px;color:var(--text-muted);max-width:64ch">Where the speakers disagreed with each other, where the evidence is thin, and what nobody addressed. These are this page's reading of the conference, with the relevant speakers named.</p>
+          <div style="border-top:1px solid var(--border-default)">
+            <sc-for list="{{ skepticTensions }}" as="b" hint-placeholder-count="9"><dc-import name="BriefingBlock" b="{{ b }}" hint-size="100%,120px"></dc-import></sc-for>
+          </div>
+        </section>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:28px">
+          <sc-for list="{{ skepticNext }}" as="n" hint-placeholder-count="2">
+            <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Button" variant="secondary" on-click="{{ n.go }}" hint-size="auto,40px">{{ n.label }}</x-import>
+          </sc-for>
+        </div>
+      </sc-if>
+    </sc-if>
+
+    <!-- THEMES INDEX -->
+    <sc-if value="{{ isThemes }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Themes" style="padding:36px 0 0">
+        <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">Explore by</p>
+        <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="1" hint-size="100%,48px">Eight themes</x-import>
+        <p style="font-size:18px;line-height:1.5;margin:20px 0 28px;max-width:60ch">The conference's ideas, grouped. Open a theme to read every block in it and what it means for each reader.</p>
+        <figure style="margin:0 0 32px;padding:16px 20px;background:var(--surface-tint);border-radius:var(--radius-sm);max-width:640px;box-sizing:border-box">
+          <figcaption style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-heading);margin-bottom:12px">{{ themesChart.title }}</figcaption>
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) 40px;gap:8px 12px;align-items:end;font-size:13px">
+            <sc-for list="{{ themesChart.bars }}" as="r" hint-placeholder-count="8">
+              <div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="line-height:1.3">{{ r.label }}</span><div style="height:8px;background:var(--hu-gray-200);border-radius:2px;overflow:hidden"><div style="height:100%;border-radius:2px;background:var(--hu-green-800);width:{{ r.pct }}%"></div></div></div>
+              <span style="font-weight:600;text-align:right;color:var(--text-heading)">{{ r.display }}</span>
+            </sc-for>
+          </div>
+        </figure>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">
+          <sc-for list="{{ themeCards }}" as="t" hint-placeholder-count="8">
+            <a href="{{ t.href }}" style="text-decoration:none;color:inherit;display:block;border-radius:var(--radius-md);transition:transform .15s" style-hover="transform:translateY(-2px)">
+              <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Card" title="{{ t.name }}" style="{{ cardFill }}" hint-size="100%,160px">
+                <p style="margin:0 0 12px;font-size:15px;line-height:1.5;text-wrap:pretty">{{ t.sum }}</p>
+                <span style="font-size:13px;font-weight:600;color:var(--text-muted)">{{ t.countLabel }}</span>
+              </x-import>
+            </a>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- THEME DETAIL -->
+    <sc-if value="{{ isTheme }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Theme" style="padding:36px 0 0">
+        <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">Theme</p>
+        <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="1" hint-size="100%,48px">{{ theme.name }}</x-import>
+        <p style="font-size:18px;line-height:1.5;margin:20px 0 0;max-width:60ch;text-wrap:pretty">{{ theme.sum }}</p>
+        <sc-if value="{{ hasSample }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:20px"><a href="{{ theme.askHref }}" style="color:var(--link);font-weight:600;text-decoration:none;font-size:15px" style-hover="text-decoration:underline">Ask the Conference about this theme →</a></div>
+        </sc-if>
+        <sc-if value="{{ theme.hasNotes }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:32px">
+            <p style="margin:0 0 12px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">What it means for each role</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
+              <sc-for list="{{ theme.notes }}" as="n" hint-placeholder-count="5">
+                <a href="{{ n.href }}" style="text-decoration:none;color:inherit;display:block;border-radius:var(--radius-md)">
+                  <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Card" tint="{{ true }}" title="{{ n.lead }}" style="{{ cardFill }}" hint-size="100%,120px">
+                    <p style="margin:0;font-size:14px;line-height:1.5">{{ n.text }}</p>
+                  </x-import>
+                </a>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+        <div style="margin-top:36px">
+          <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="3" shadow="{{ false }}" hint-size="100%,28px">{{ theme.blocksTitle }}</x-import>
+          <div style="margin-top:10px;border-top:1px solid var(--border-default)">
+            <sc-for list="{{ theme.blocks }}" as="b" hint-placeholder-count="6"><dc-import name="BriefingBlock" b="{{ b }}" hint-size="100%,120px"></dc-import></sc-for>
+          </div>
+        </div>
+        <div style="margin-top:32px">
+          <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">Sessions this theme draws from</p>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:15px">
+            <sc-for list="{{ theme.sessions }}" as="s" hint-placeholder-count="4">
+              <li><a href="{{ s.href }}" style="color:var(--link);font-weight:600;text-decoration:none" style-hover="text-decoration:underline">{{ s.who }}</a><span style="color:var(--text-muted)"> · {{ s.title }}</span></li>
+            </sc-for>
+          </ul>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:40px;padding-top:20px;border-top:1px solid var(--border-default)">
+          <sc-if value="{{ theme.hasPrev }}" hint-placeholder-val="{{ false }}"><a href="{{ theme.prevHref }}" style="color:var(--link);font-weight:600;text-decoration:none" style-hover="text-decoration:underline">← {{ theme.prevName }}</a></sc-if>
+          <span></span>
+          <sc-if value="{{ theme.hasNext }}" hint-placeholder-val="{{ false }}"><a href="{{ theme.nextHref }}" style="color:var(--link);font-weight:600;text-decoration:none" style-hover="text-decoration:underline">{{ theme.nextName }} →</a></sc-if>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- SESSIONS INDEX -->
+    <sc-if value="{{ isSessions }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Sessions" style="padding:36px 0 0">
+        <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">Explore by</p>
+        <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="1" hint-size="100%,48px">Who said what</x-import>
+        <p style="font-size:18px;line-height:1.5;margin:20px 0 8px;max-width:60ch">The twenty recorded sessions in order. This view is the same for every reader.</p>
+        <sc-for list="{{ sessionDays }}" as="d" hint-placeholder-count="3">
+          <div style="margin-top:36px">
+            <p style="font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-heading);margin:0;padding-bottom:8px;border-bottom:2px solid var(--border-strong)">{{ d.label }}</p>
+            <sc-for list="{{ d.sessions }}" as="s" hint-placeholder-count="5">
+              <a href="{{ s.href }}" style="display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:6px 18px;padding:14px 8px;border-bottom:1px solid var(--border-default);text-decoration:none;color:inherit;align-items:baseline;border-radius:var(--radius-sm)" style-hover="background:var(--surface-tint)">
+                <span style="font-size:13px;font-weight:600;color:var(--text-muted)">{{ s.time }}</span>
+                <span style="min-width:0"><span style="font-weight:600;color:var(--text-heading)">{{ s.who }}</span><span style="display:block;font-size:14px;color:var(--text-muted);margin-top:2px;text-wrap:pretty">{{ s.title }}</span></span>
+                <span style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;width:96px"><span style="font-size:13px;color:var(--text-muted);white-space:nowrap">{{ s.countLabel }}</span><span style="display:block;width:100%;height:6px;background:var(--hu-gray-200);border-radius:2px;overflow:hidden"><span style="display:block;height:100%;border-radius:2px;background:var(--hu-green-800);width:{{ s.pct }}%"></span></span></span>
+              </a>
+            </sc-for>
+          </div>
+        </sc-for>
+      </section>
+    </sc-if>
+
+    <!-- SESSION DETAIL -->
+    <sc-if value="{{ isSession }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Session" style="padding:36px 0 0">
+        <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">{{ session.when }}</p>
+        <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="1" hint-size="100%,48px">{{ session.who }}</x-import>
+        <p style="font-size:18px;line-height:1.5;margin:20px 0 4px;max-width:60ch;text-wrap:pretty">{{ session.title }}</p>
+        <p style="font-size:15px;color:var(--text-muted);margin:0">{{ session.org }}</p>
+        <sc-if value="{{ hasSample }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:20px"><a href="{{ session.askHref }}" style="color:var(--link);font-weight:600;text-decoration:none;font-size:15px" style-hover="text-decoration:underline">Ask the Conference about this session →</a></div>
+        </sc-if>
+        <sc-if value="{{ session.hasSpeakers }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:24px">
+            <sc-for list="{{ session.speakers }}" as="p" hint-placeholder-count="1">
+              <a href="{{ p.href }}" style="text-decoration:none;color:inherit;display:block;border-radius:var(--radius-md)">
+                <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Card" tint="{{ true }}" style="{{ cardFill }}" hint-size="100%,90px">
+                  <div style="font-weight:700;color:var(--text-heading);margin-bottom:4px">{{ p.name }}</div>
+                  <div style="font-size:14px;color:var(--text-muted)">{{ p.line }}</div>
+                  <span style="display:inline-block;margin-top:10px;font-size:13px;font-weight:600;color:var(--link)">Speaker page →</span>
+                </x-import>
+              </a>
+            </sc-for>
+          </div>
+        </sc-if>
+        <div style="margin-top:36px">
+          <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="3" shadow="{{ false }}" hint-size="100%,28px">{{ session.blocksTitle }}</x-import>
+          <sc-if value="{{ session.hasBlocks }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:10px;border-top:1px solid var(--border-default)">
+              <sc-for list="{{ session.blocks }}" as="b" hint-placeholder-count="4"><dc-import name="BriefingBlock" b="{{ b }}" hint-size="100%,120px"></dc-import></sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ session.noBlocks }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:10px 0 0;color:var(--text-muted)">No blocks were drawn from this recording.</p>
+          </sc-if>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:40px;padding-top:20px;border-top:1px solid var(--border-default)">
+          <sc-if value="{{ session.hasPrev }}" hint-placeholder-val="{{ false }}"><a href="{{ session.prevHref }}" style="color:var(--link);font-weight:600;text-decoration:none" style-hover="text-decoration:underline">← {{ session.prevWho }}</a></sc-if>
+          <span></span>
+          <sc-if value="{{ session.hasNext }}" hint-placeholder-val="{{ false }}"><a href="{{ session.nextHref }}" style="color:var(--link);font-weight:600;text-decoration:none" style-hover="text-decoration:underline">{{ session.nextWho }} →</a></sc-if>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- SPEAKERS INDEX -->
+    <sc-if value="{{ isSpeakers }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Speakers" style="padding:36px 0 0">
+        <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">Explore by</p>
+        <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="1" hint-size="100%,48px">Speakers</x-import>
+        <p style="font-size:18px;line-height:1.5;margin:20px 0 28px;max-width:60ch">Everyone who presented in the recorded sessions, in program order. Affiliations come from the published program; where it listed none, none is shown.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
+          <sc-for list="{{ speakerCards }}" as="p" hint-placeholder-count="12">
+            <a href="{{ p.href }}" style="text-decoration:none;color:inherit;display:block;border-radius:var(--radius-md);transition:transform .15s" style-hover="transform:translateY(-2px)">
+              <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Card" title="{{ p.name }}" style="{{ cardFill }}" hint-size="100%,150px">
+                <p style="margin:0 0 8px;font-size:14px;color:var(--text-muted)">{{ p.line }}</p>
+                <p style="margin:0 0 12px;font-size:14px;line-height:1.45;text-wrap:pretty">{{ p.talks }}</p>
+                <span style="font-size:13px;font-weight:600;color:var(--text-muted)">{{ p.countLabel }}</span>
+              </x-import>
+            </a>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- SPEAKER DETAIL -->
+    <sc-if value="{{ isSpeaker }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Speaker" style="padding:36px 0 0">
+        <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">Speaker</p>
+        <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="1" hint-size="100%,48px">{{ speaker.name }}</x-import>
+        <dl style="margin:20px 0 0;display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 20px;font-size:16px;max-width:60ch">
+          <sc-if value="{{ speaker.hasRole }}" hint-placeholder-val="{{ false }}">
+            <dt style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);padding-top:3px">Title</dt><dd style="margin:0">{{ speaker.role }}</dd>
+          </sc-if>
+          <sc-if value="{{ speaker.hasInst }}" hint-placeholder-val="{{ false }}">
+            <dt style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);padding-top:3px">Institution</dt><dd style="margin:0">{{ speaker.institution }}</dd>
+          </sc-if>
+          <sc-if value="{{ speaker.noAffil }}" hint-placeholder-val="{{ false }}">
+            <dt style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);padding-top:3px">Affiliation</dt><dd style="margin:0;color:var(--text-muted)">Not listed in the program notes</dd>
+          </sc-if>
+        </dl>
+        <sc-if value="{{ hasSample }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:20px"><a href="{{ speaker.askHref }}" style="color:var(--link);font-weight:600;text-decoration:none;font-size:15px" style-hover="text-decoration:underline">Ask the Conference about this speaker →</a></div>
+        </sc-if>
+        <div style="margin-top:32px">
+          <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="3" shadow="{{ false }}" hint-size="100%,28px">{{ speaker.talksTitle }}</x-import>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;max-width:720px">
+            <sc-for list="{{ speaker.talks }}" as="t" hint-placeholder-count="1">
+              <a href="{{ t.href }}" style="text-decoration:none;color:inherit;display:block;border-radius:var(--radius-md)">
+                <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Card" tint="{{ true }}" hint-size="100%,90px">
+                  <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:4px">{{ t.when }}</div>
+                  <div style="font-weight:600;color:var(--text-heading);text-wrap:pretty">{{ t.title }}</div>
+                  <div style="font-size:14px;color:var(--text-muted);margin-top:4px">{{ t.with }}</div>
+                </x-import>
+              </a>
+            </sc-for>
+          </div>
+        </div>
+        <div style="margin-top:36px">
+          <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="3" shadow="{{ false }}" hint-size="100%,28px">{{ speaker.blocksTitle }}</x-import>
+          <sc-if value="{{ speaker.hasBlocks }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:10px;border-top:1px solid var(--border-default)">
+              <sc-for list="{{ speaker.blocks }}" as="b" hint-placeholder-count="4"><dc-import name="BriefingBlock" b="{{ b }}" hint-size="100%,140px"></dc-import></sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ speaker.noBlocks }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:10px 0 0;color:var(--text-muted)">No blocks were drawn from this speaker's remarks.</p>
+          </sc-if>
+        </div>
+        <sc-if value="{{ speaker.hasCited }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:36px">
+            <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="3" shadow="{{ false }}" hint-size="100%,28px">{{ speaker.citedTitle }}</x-import>
+            <p style="margin:6px 0 12px;color:var(--text-muted)">From the <a href="#/reading" style="color:var(--link)">reading list</a>.</p>
+            <ul style="list-style:none;margin:0;padding:0;border-top:1px solid var(--border-default);max-width:720px">
+              <sc-for list="{{ speaker.cited }}" as="c" hint-placeholder-count="2">
+                <li style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 20px;padding:12px 0;border-bottom:1px solid var(--border-default);align-items:baseline">
+                  <span><span style="font-family:var(--font-serif);font-size:18px;color:var(--hu-black)">{{ c.title }}</span><sc-if value="{{ c.hasAuthor }}" hint-placeholder-val="{{ true }}"><span style="font-size:14px;color:var(--text-muted)"> · {{ c.author }}</span></sc-if></span>
+                  <span style="font-size:13px;color:var(--text-muted)">{{ c.where }}</span>
+                </li>
+              </sc-for>
+            </ul>
+          </div>
+        </sc-if>
+        <sc-if value="{{ speaker.hasOwn }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:36px">
+            <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="3" shadow="{{ false }}" hint-size="100%,28px">Their own book</x-import>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;max-width:720px">
+              <sc-for list="{{ speaker.own }}" as="o" hint-placeholder-count="1">
+                <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Card" tint="{{ true }}" hint-size="100%,80px">
+                  <p style="margin:0 0 4px;font-family:var(--font-serif);font-size:19px;line-height:1.3;color:var(--hu-black)">{{ o.title }}</p>
+                  <p style="margin:0;font-size:14px;color:var(--text-muted)">{{ o.note }}</p>
+                </x-import>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ speaker.hasMentions }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:36px">
+            <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="3" shadow="{{ false }}" hint-size="100%,28px">{{ speaker.mentionsTitle }}</x-import>
+            <p style="margin:6px 0 8px;color:var(--text-muted)">Where other speakers, or this page's analysis, refer to them.</p>
+            <div style="border-top:1px solid var(--border-default)">
+              <sc-for list="{{ speaker.mentions }}" as="b" hint-placeholder-count="2"><dc-import name="BriefingBlock" b="{{ b }}" hint-size="100%,140px"></dc-import></sc-for>
+            </div>
+          </div>
+        </sc-if>
+        <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:40px;padding-top:20px;border-top:1px solid var(--border-default)">
+          <sc-if value="{{ speaker.hasPrev }}" hint-placeholder-val="{{ false }}"><a href="{{ speaker.prevHref }}" style="color:var(--link);font-weight:600;text-decoration:none" style-hover="text-decoration:underline">← {{ speaker.prevName }}</a></sc-if>
+          <span></span>
+          <sc-if value="{{ speaker.hasNext }}" hint-placeholder-val="{{ false }}"><a href="{{ speaker.nextHref }}" style="color:var(--link);font-weight:600;text-decoration:none" style-hover="text-decoration:underline">{{ speaker.nextName }} →</a></sc-if>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- LEARN MORE -->
+    <sc-if value="{{ isReading }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Learn more" style="padding:36px 0 0">
+        <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">Reading list</p>
+        <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="1" hint-size="100%,48px">I want to learn more</x-import>
+        <p style="font-size:18px;line-height:1.5;margin:20px 0 8px;max-width:60ch;text-wrap:pretty">The books, essays, and documents speakers reached for during the three days, and who reached for them. Names link to the speaker's page.</p>
+        <sc-for list="{{ readingGroups }}" as="g" hint-placeholder-count="3">
+          <div style="margin-top:40px">
+            <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="3" shadow="{{ false }}" hint-size="100%,28px">{{ g.title }}</x-import>
+            <sc-if value="{{ g.hasSum }}" hint-placeholder-val="{{ false }}"><p style="margin:6px 0 0;color:var(--text-muted);max-width:64ch">{{ g.sum }}</p></sc-if>
+            <div style="margin-top:14px;overflow-x:auto">
+              <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Table" columns="{{ g.columns }}" rows="{{ g.rows }}" hint-size="100%,200px"></x-import>
+            </div>
+          </div>
+        </sc-for>
+        <div style="margin-top:44px">
+          <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="3" shadow="{{ false }}" hint-size="100%,28px">Speakers' own books</x-import>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:14px">
+            <sc-for list="{{ ownBooks }}" as="o" hint-placeholder-count="4">
+              <a href="{{ o.href }}" style="text-decoration:none;color:inherit;display:block;border-radius:var(--radius-md);transition:transform .15s" style-hover="transform:translateY(-2px)">
+                <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Card" tint="{{ true }}" title="{{ o.name }}" style="{{ cardFill }}" hint-size="100%,140px">
+                  <p style="margin:0 0 6px;font-family:var(--font-serif);font-size:19px;line-height:1.3;color:var(--hu-black)">{{ o.title }}</p>
+                  <p style="margin:0 0 10px;font-size:14px;color:var(--text-muted)">{{ o.note }}</p>
+                  <span style="font-size:13px;font-weight:600;color:var(--link)">{{ o.line }}</span>
+                </x-import>
+              </a>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ASK -->
+    <sc-if value="{{ isAsk }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Ask" style="padding:36px 0 0">
+        <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">Live answers</p>
+        <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="1" hint-size="100%,48px">Ask the Conference</x-import>
+        <sc-if value="{{ noSample }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:24px;max-width:640px">
+            <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Card" tint="{{ true }}" title="Not available here" hint-size="100%,100px">Ask the Conference needs a live connection to answer and only switches on where one exists. Everything else on this site works without it: changing the reader or format only filters and reorders blocks that were written and checked in advance.</x-import>
+          </div>
+        </sc-if>
+        <sc-if value="{{ hasSample }}" hint-placeholder-val="{{ false }}">
+          <p style="font-size:18px;line-height:1.5;margin:20px 0 24px;max-width:60ch">{{ askIntro }}</p>
+          <sc-if value="{{ askHasScope }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px;padding:10px 14px;background:var(--surface-tint);border-radius:var(--radius-sm);max-width:760px;box-sizing:border-box;font-size:14px">
+              <span style="font-weight:600;text-transform:uppercase;letter-spacing:0.05em;font-size:12px;color:var(--text-heading)">Asking about</span>
+              <a href="{{ askScopeHref }}" style="color:var(--link);font-weight:600;text-decoration:none" style-hover="text-decoration:underline">{{ askScopeLabel }}</a>
+              <span style="color:var(--text-muted)">{{ askScopeCount }}</span>
+              <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Button" variant="ghost" size="sm" on-click="{{ clearScope }}" hint-size="auto,28px">Ask about everything instead</x-import>
+            </div>
+          </sc-if>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px" role="group" aria-label="Role">
+            <span style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-right:6px">Role</span>
+            <sc-for list="{{ askLensChips }}" as="c" hint-placeholder-count="6">
+              <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Button" variant="{{ c.variant }}" size="sm" on-click="{{ c.go }}" hint-size="auto,32px">{{ c.label }}</x-import>
+            </sc-for>
+          </div>
+          <div style="background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:18px;box-shadow:var(--shadow-card);max-width:760px">
+            <textarea aria-label="Your question" placeholder="Ask in your own words. For example: what does this mean for the people who run our learning management system?" value="{{ askQ }}" onChange="{{ onAskInput }}" onKeyDown="{{ onAskKey }}" style="width:100%;box-sizing:border-box;min-height:84px;resize:vertical;border:1px solid var(--border-default);border-radius:var(--radius-sm);padding:10px 12px;font:inherit;font-size:16px;line-height:1.45;color:var(--text-body);background:var(--surface-page)"></textarea>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 14px">
+              <sc-for list="{{ askSuggest }}" as="s" hint-placeholder-count="5">
+                <button type="button" onClick="{{ s.go }}" style="border:1px solid var(--border-default);background:var(--surface-page);color:var(--text-body);border-radius:var(--radius-pill);padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;text-align:left" style-hover="border-color:var(--hu-green-800);color:var(--hu-green-800)">{{ s.label }}</button>
+              </sc-for>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+              <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Button" variant="primary" disabled="{{ askBusy }}" on-click="{{ runAsk }}" hint-size="auto,40px">{{ askGoLabel }}</x-import>
+              <sc-if value="{{ askBusy }}" hint-placeholder-val="{{ false }}">
+                <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.Button" variant="secondary" on-click="{{ stopAsk }}" hint-size="auto,40px">Stop</x-import>
+              </sc-if>
+              <span role="status" style="font-size:14px;color:var(--text-muted)">{{ askStatus }}</span>
+            </div>
+            <p style="margin:12px 0 0;font-size:13px;color:var(--text-muted)">{{ askHint }} Ctrl or Cmd + Enter also sends.</p>
+          </div>
+          <sc-if value="{{ askHasErr }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:16px 0 0;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--hu-red);font-size:14px;max-width:68ch">{{ askErr }}</p>
+          </sc-if>
+          <div style="margin-top:24px;max-width:70ch;font-size:16px;line-height:1.55">{{ askAnswer }}</div>
+          <sc-if value="{{ askHasUsed }}" hint-placeholder-val="{{ false }}">
+            <section style="margin-top:36px">
+              <x-import component-from-global-scope="HuntingtonUniversityDesignSystem_2253e8.SectionHeader" level="3" shadow="{{ false }}" hint-size="100%,28px">Blocks this answer used</x-import>
+              <p style="margin:6px 0 8px;color:var(--text-muted)">{{ askUsedSum }}</p>
+              <div style="border-top:1px solid var(--border-default)">
+                <sc-for list="{{ askUsed }}" as="b" hint-placeholder-count="2"><dc-import name="BriefingBlock" b="{{ b }}" hint-size="100%,120px"></dc-import></sc-for>
+              </div>
+            </section>
+          </sc-if>
+        </sc-if>
+      </section>
+    </sc-if>
+  </main>
+
+  <footer style="border-top:1px solid var(--border-default);background:var(--surface-tint)">
+    <div style="max-width:1040px;margin:0 auto;padding:32px 24px 56px;color:var(--text-muted);font-size:14px;line-height:1.55">
+      <p style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;color:var(--text-heading);margin:0 0 12px">How this page is built</p>
+      <ul style="display:flex;flex-wrap:wrap;gap:6px 20px;margin:0 0 16px;padding:0;list-style:none;font-size:13px;font-weight:600;color:var(--text-body)">
+        <sc-for list="{{ counts }}" as="c" hint-placeholder-count="6"><li>{{ c }}</li></sc-for>
+      </ul>
+      <p style="max-width:70ch;margin:0 0 10px">Every block comes from Justin's recordings of the sessions he attended: all five keynotes, both Saturday panels, and Education and STEM track sessions on Thursday and Friday. The conference also ran business, church, healthcare and arts tracks that are not covered here except where the track leaders summarized them on Saturday.</p>
+      <p style="max-width:70ch;margin:0 0 10px">The recordings were turned into text by automatic captioning, which garbles names and some passages. Quotes were limited to passages that came through cleanly, and each one was checked by script against the transcript, word for word. Figures were checked against the transcript one at a time. Speaker names were corrected against the published program where it listed them.</p>
+      <sc-if value="{{ hasSample }}" hint-placeholder-val="{{ false }}">
+        <p style="max-width:70ch;margin:0 0 10px">The Ask the Conference page is different. It sends the blocks and your question to a language model and shows the answer.</p>
+      </sc-if>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;mentiUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://www.menti.com/?code=88258238&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Ask Justin (Menti)&quot;},&quot;mentiCode&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;88258238&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Ask Justin (Menti)&quot;}}">
+class Component extends DCLogic {
+  state = { data: null, route: { page: 'home' }, plain: false, hasSample: false, askLens: 'all', ask: { q: '', text: '', final: false, busy: false, status: '', err: '' } };
+  sampleFn = null; ctl = null;
+  TYPE = { quote: 'Quote', stat: 'Figure', idea: 'Reported', practice: 'Practice', story: 'Story', tension: 'Open question', synth: 'Synthesis' };
+  BADGE = { quote: 'solid', stat: 'tint', idea: 'tint', practice: 'tint', story: 'tint', tension: 'outline', synth: 'outline' };
+  FORMATS = [['brief', 'Briefing', 'The eight blocks most worth this reader\'s time, plus two open questions.'], ['deep', 'Deep dive', 'All eight themes. Blocks that matter most to this reader come first, and the rest are folded under each theme.'], ['monday', 'Monday morning', 'Suggested starting points, with the blocks each one rests on.'], ['skeptic', 'The skeptic', 'Where the speakers disagreed, where the evidence is thin, and what nobody addressed.']];
+  KICKER = { brief: 'Briefing for', deep: 'Deep dive for', monday: 'Monday morning for', skeptic: 'The skeptic, for' };
+  DAYS = { Thu: 'Thursday, October 8', Fri: 'Friday, October 9', Sat: 'Saturday, October 10' };
+  SUGGEST = ["Explain this conference like I'm five.", 'What should our help desk do differently next week?', 'Give me the strongest case against everything said here.', 'I teach nursing. What here matters to me?', 'Write a 60-second update I could read aloud at a staff meeting.'];
+  ERR = { not_granted: "Live answers aren't allowed for this page in this view.", sampling_disabled: "Live answers aren't available on this account.", rate_limited: 'Too many requests just now, or a usage limit was reached. Try again in a little while.', session_expired: 'Your session expired. Sign in again and retry.', refused: 'That request was declined. Try asking it a different way.', prompt_too_large: 'That request was too long. Shorten it and try again.', empty_completion: 'No answer came back. Try a simpler request.', upstream_error: 'The connection was interrupted. Try again.' };
+
+  /* Charts for figure blocks whose numbers the text states outright. Values are the speaker's, as reported. */
+  CHARTS = {
+    B90: { title: 'Calvin undergraduates, spring survey', unit: '%', bars: [['Use AI at least weekly', 57], ['Use it daily', 23], ['Never use it', 10]] },
+    B92: { title: 'Weekly AI use by major', unit: '%', bars: [['Engineering and computer science, spring', 81], ['Business, spring', 77], ['Humanities, spring', 32], ['Business, fall coursework', 90], ['Humanities, fall coursework', 9]] },
+    B93: { title: 'Weekly AI use, fall survey', unit: '%', bars: [['Faith is central', 53], ['Everyone else', 58, '57–59%'], ['Value learning for its own sake', 23], ['Career-focused', 70]] },
+    B94: { title: 'What students say', unit: '%', bars: [['Don\'t use AI because they want to really learn', 69], ['Don\'t use AI for fear of getting caught', 31], ['Believe over-relying on AI threatens wisdom', 86]] },
+    B97: { title: '88 student newspaper opinion pieces', max: 88, bars: [['Against AI', 48], ['For AI', 22], ['Ambiguous', 7], ['Argued from Christian grounds', 7]] },
+    B99: { title: '130 high school students', unit: '%', bars: [['Could do difficult schoolwork without AI', 97], ['Struggling helps them learn', 95], ['AI is their first move when work gets hard', 6, '8 of 125']] },
+    B100: { title: 'Wanting AI to help others, correlated with planning to use it', max: 1, bars: [['Indonesia', 0.82], ['Slovakia, Poland, Czechia', 0.37, '0.26–0.48', 'soft']] },
+    B110: { title: 'One proposed 100-megawatt data center', max: 269, bars: [['Rated load', 100, '100 MW'], ['Primary energy needed', 269, '269 MW']] },
+    B111: { title: 'U.S. data centers, gigawatts', max: 390, bars: [['Operating today', 60, '~60 GW'], ['Planned', 390, '~390 GW'], ['Michigan\'s whole grid', 32, '~32 GW', 'soft']] }
+  };
+  chart(c) { if (!c) return null; const max = c.max || 100;
+    return { title: c.title, bars: c.bars.map(b => ({ label: b[0], pct: Math.round(b[1] / max * 100), display: b[2] || (b[1] + (c.unit || '')), color: b[3] === 'soft' ? 'var(--hu-green-300)' : 'var(--hu-green-800)' })) }; }
+  countChart(title, rows, max) { return { title, bars: rows.map(r => ({ label: r[0], pct: Math.round(r[1] / max * 100), display: String(r[1]), color: 'var(--hu-green-800)' })) }; }
+  store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+  componentDidMount() {
+    this.onHash = this.onHash.bind(this);
+    window.addEventListener('hashchange', this.onHash);
+    this.setState({ plain: this.store('lcb-plain') === '1' });
+    Promise.all([fetch('briefing-data.json').then(r => r.json()), fetch('speakers.json').then(r => r.json()), fetch('reading.json').then(r => r.json())]).then(([d, sp, rd]) => { d.speakers = sp; d.reading = rd; this.index(d); const r = this.parse(); this.setState({ data: d, route: r, askLens: this.LN[this.store('lcb-lens')] ? this.store('lcb-lens') : 'all' }); this.afterRoute(r); });
+    // Self-hosted deployments: config.js sets window.ASK_ENDPOINT to a proxy that holds the API key.
+    this.askEndpoint = (typeof window.ASK_ENDPOINT === 'string' && window.ASK_ENDPOINT.trim()) || '';
+    if (this.askEndpoint) this.setState({ hasSample: true });
+    if (window.claude && typeof window.claude.complete === 'function') this.setState({ hasSample: true });
+    if (window.claude && typeof window.claude.use === 'function') window.claude.use('sample').then(fn => { if (typeof fn === 'function') { this.sampleFn = fn; this.setState({ hasSample: true }); } }).catch(() => {});
+  }
+  componentWillUnmount() { window.removeEventListener('hashchange', this.onHash); }
+  index(d) {
+    this.S = d.sessions; this.TH = {}; d.themes.forEach(t => this.TH[t.id] = t); this.LN = {}; d.lenses.forEach(l => this.LN[l.id] = l);
+    this.BY = {}; d.blocks.forEach((b, i) => { b.i = i; this.BY[b.id] = b; });
+    this.SP = {}; this.ALIAS = {}; const al = [];
+    d.speakers.forEach(s => { this.SP[s.id] = s; s.aliases.forEach(a => { this.ALIAS[a] = s; al.push(a); }); });
+    al.sort((a, b) => b.length - a.length);
+    this.NAMERE = new RegExp('\\b(' + al.map(a => a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')\\b', 'g');
+    const norm = s => s.toLowerCase().replace(/[‘’]/g, "'").replace(/[^a-z0-9]+/g, ' ').trim(); this.norm = norm;
+    this.QNORM = d.blocks.filter(b => b.type === 'quote').map(b => norm(b.text));
+    this.ANORM = d.blocks.map(b => norm(b.text + ' ' + (b.ctx || '') + ' ' + b.plain));
+  }
+  parse() {
+    const seg = (location.hash || '').replace(/^#\/?/, '').split('/').filter(Boolean);
+    const sl = this.store('lcb-lens'), sf = this.store('lcb-fmt');
+    const fmtOk = f => this.FORMATS.some(x => x[0] === f);
+    const lensOr = l => this.LN[l] ? l : (this.LN[sl] ? sl : 'all');
+    const fmtOr = f => fmtOk(f) ? f : (fmtOk(sf) ? sf : 'brief');
+    if (!seg.length) return { page: 'home' };
+    if (seg[0] === 'readers') return { page: 'reader', lens: lensOr(seg[1]), fmt: fmtOr(seg[2]) };
+    if (seg[0] === 'themes') return this.TH[seg[1]] ? { page: 'theme', id: seg[1] } : { page: 'themes' };
+    if (seg[0] === 'sessions') return this.S[seg[1]] ? { page: 'session', id: seg[1] } : { page: 'sessions' };
+    if (seg[0] === 'reading') return { page: 'reading' };
+    if (seg[0] === 'speakers') return this.SP[seg[1]] ? { page: 'speaker', id: seg[1] } : { page: 'speakers' };
+    if (seg[0] === 'ask') { const k = seg[1], id = seg[2];
+      if (k === 'theme' && this.TH[id]) return { page: 'ask', scope: { kind: 'theme', id } };
+      if (k === 'session' && this.S[id]) return { page: 'ask', scope: { kind: 'session', id } };
+      if (k === 'speaker' && this.SP[id]) return { page: 'ask', scope: { kind: 'speaker', id } };
+      return { page: 'ask' }; }
+    if (this.LN[seg[0]]) return { page: 'reader', lens: seg[0], fmt: fmtOr(seg[1]) };
+    return { page: 'home' };
+  }
+  afterRoute(r) { if (r.page === 'reader') { this.store('lcb-lens', r.lens); this.store('lcb-fmt', r.fmt); } window.scrollTo({ top: 0 }); }
+  onHash() { if (!this.state.data) return; const r = this.parse(); this.setState({ route: r }); this.afterRoute(r); }
+  go(hash) { return () => { location.hash = hash; }; }
+  scrollToId(id) { const el = document.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 24 }); }
+
+  /* Wrap every speaker name in running text with a link to that speaker's page. */
+  linkify(str, skipId) {
+    if (!str) return str; const re = this.NAMERE; re.lastIndex = 0; const out = []; let last = 0, m, k = 0;
+    while ((m = re.exec(str))) { const sp = this.ALIAS[m[1]]; if (!sp || sp.id === skipId) continue;
+      if (m.index > last) out.push(str.slice(last, m.index));
+      out.push(React.createElement('a', { key: k++, href: '#/speakers/' + sp.id, title: sp.name, style: { color: 'inherit', textDecoration: 'underline', textDecorationColor: 'var(--hu-green-300)', textDecorationThickness: 1.5, textUnderlineOffset: 3 } }, m[1]));
+      last = m.index + m[1].length; }
+    if (!out.length) return str; if (last < str.length) out.push(str.slice(last));
+    return React.createElement(React.Fragment, null, out);
+  }
+  speakersIn(str) { const re = this.NAMERE; re.lastIndex = 0; const ids = [], out = []; let m; while ((m = re.exec(str || ''))) { const sp = this.ALIAS[m[1]]; if (sp && ids.indexOf(sp.id) < 0) { ids.push(sp.id); out.push(sp); } } return out; }
+  isBy(b, sp) { return !!b.s && !/audience member|quoted by|presenting for/.test(b.who) && this.speakersIn(b.who.split(/, quoting/)[0]).some(x => x.id === sp.id); }
+  w(b, l) { return (b.w && b.w[l]) || 0; }
+  sorted(list, l) { return list.slice().sort((a, b) => this.w(b, l) - this.w(a, l) || a.i - b.i); }
+  vm(b, opts) {
+    opts = opts || {}; const s = b.s ? this.S[b.s] : null, isQ = b.type === 'quote', plain = this.state.plain;
+    const prim = s ? this.speakersIn(b.who.split(/, quoting/)[0]) : [], own = prim.length === 1 && !/audience member|quoted by|presenting for/.test(b.who);
+    return { id: b.id, prefix: opts.prefix || 'blk-', domId: (opts.prefix || 'blk-') + b.id, isQuote: isQ, notQuote: !isQ, typeLabel: this.TYPE[b.type], badge: this.BADGE[b.type],
+      text: this.linkify(isQ ? '“' + b.text.charAt(0).toUpperCase() + b.text.slice(1) + '”' : (plain ? b.plain : b.text)),
+      hasCtx: isQ && !!b.ctx, ctx: this.linkify(b.ctx || ''), showPlain: isQ && plain, plain: this.linkify(b.plain),
+      hasSession: !!s, noSession: !s, who: own ? b.who : this.linkify(b.who || ''), whoHref: own ? '#/speakers/' + prim[0].id : (s ? '#/sessions/' + b.s : ''), srcMeta: s ? s.day + ' ' + s.time + ', ' + s.kind.toLowerCase() : '', sessionHref: s ? '#/sessions/' + b.s : '',
+      showTheme: !!opts.theme, themeName: this.TH[b.theme].name, themeHref: '#/themes/' + b.theme,
+      hasChart: !!this.CHARTS[b.id], chart: this.chart(this.CHARTS[b.id]) };
+  }
+  vms(list, opts) { return list.map(b => this.vm(b, opts)); }
+  lensChips(active, onPick) { return this.state.data.lenses.map(l => ({ label: l.short, variant: l.id === active ? 'primary' : 'secondary', go: onPick(l.id) })); }
+
+  /* ---- Ask ---- */
+  /* Which blocks a scoped question is about (theme, session, or speaker page). */
+  scopeInfo(scope) {
+    if (!scope) return null; const B = this.state.data.blocks;
+    if (scope.kind === 'theme') { const t = this.TH[scope.id]; return { label: t.name, ids: B.filter(b => b.theme === t.id).map(b => b.id), href: '#/themes/' + t.id, desc: 'the theme "' + t.name + '"' }; }
+    if (scope.kind === 'session') { const s = this.S[scope.id]; return { label: s.who + ' · ' + s.title, ids: B.filter(b => b.s === scope.id).map(b => b.id), href: '#/sessions/' + scope.id, desc: 'the session "' + s.title + '" by ' + s.who }; }
+    const sp = this.SP[scope.id]; return { label: sp.name, ids: B.filter(b => this.isBy(b, sp)).map(b => b.id), href: '#/speakers/' + sp.id, desc: 'the speaker ' + sp.name };
+  }
+  buildPrompt(q) {
+    const L = this.LN[this.state.askLens], S = this.S, TYPE = this.TYPE, sc = this.scopeInfo(this.state.route.scope);
+    const lines = this.state.data.blocks.map(b => { const s = b.s ? S[b.s] : null, where = s ? (s.day + ' ' + s.kind) : 'page analysis';
+      return b.type === 'quote' ? b.id + ' | QUOTE | ' + b.who + ' | ' + where + ' | text: "' + b.text + '"' + (b.ctx ? ' | context: ' + b.ctx : '') : b.id + ' | ' + TYPE[b.type].toUpperCase() + ' | ' + (b.who || 'page analysis') + ' | ' + where + ' | ' + b.text; });
+    const system = ['You answer questions about a conference briefing. The material is a set of content blocks from the conference "Wisdom in the Age of AI" (Calvin University, October 8-10, 2026). Follow these rules exactly.',
+      '1. Use only the blocks below. Do not add facts, numbers, names or quotes from anywhere else. If the blocks do not cover what is asked, say so plainly.',
+      '2. QUOTE blocks are verbatim. If you quote, copy the words exactly, inside double quotation marks, and name the speaker. Never put quotation marks around anything that is not the text of a QUOTE block.',
+      '3. Figures and reported ideas keep their source: name who said it.',
+      '4. SYNTHESIS and OPEN QUESTION blocks are the page author\'s analysis, not something a speaker said. Present them as analysis.',
+      '5. After each point, cite the block ids you used in square brackets, like [B03] or [B03, T05].',
+      '6. Write for the reader described. Plain, direct sentences, no preamble, no closing summary. Stay under 300 words unless asked for more. Simple Markdown only: short paragraphs, lists, **bold**, ### headings.',
+      '', 'Reader: ' + L.name + '. ' + L.intro + (this.state.plain ? ' Use plain, everyday words a twelve-year-old could follow.' : ''),
+      sc ? '\nThe reader is asking about ' + sc.desc + '. Lead with these blocks: ' + sc.ids.join(', ') + '. Other blocks may be used when they bear on the question.' : '',
+      '', 'Blocks:', lines.join('\n')].join('\n');
+    return { system, user: q, joined: system + '\n\nRequest: ' + q };
+  }
+  quoteStatus(q) { const n = this.norm(q); if (n.split(' ').length < 4) return 'skip';
+    if (this.QNORM.some(t => t.indexOf(n) >= 0 || n.indexOf(t) >= 0)) return 'ok'; if (this.ANORM.some(t => t.indexOf(n) >= 0)) return 'ok'; return 'bad'; }
+  inline(str, final, found) {
+    const re = /(\*\*[^*\n]+\*\*|\[[BT]\d{2,3}(?:\s*,\s*[BT]\d{2,3})*\]|“[^”\n]{8,}”|"[^"\n]{8,}")/g; const out = []; let last = 0, m, k = 0;
+    const cite = { fontSize: 12, fontWeight: 600, border: '1px solid var(--border-default)', background: 'var(--surface-card)', color: 'var(--text-muted)', borderRadius: 4, padding: '0 5px', margin: '0 2px', whiteSpace: 'nowrap', textDecoration: 'none' };
+    while ((m = re.exec(str))) { if (m.index > last) out.push(React.createElement(React.Fragment, { key: k++ }, this.linkify(str.slice(last, m.index)))); const tok = m[0]; last = m.index + tok.length;
+      if (tok.slice(0, 2) === '**') out.push(React.createElement('strong', { key: k++ }, tok.slice(2, -2)));
+      else if (tok.charAt(0) === '[') tok.slice(1, -1).split(/\s*,\s*/).forEach(id => { if (this.BY[id]) { found.cites.add(id); out.push(React.createElement('a', { key: k++, href: '#used-' + id, title: this.BY[id].who || 'Page analysis', style: cite, onClick: e => { e.preventDefault(); this.scrollToId('used-' + id); } }, id)); } else out.push('[' + id + ']'); });
+      else out.push(React.createElement(React.Fragment, { key: k++ }, this.linkify(tok))); }
+    if (last < str.length) out.push(React.createElement(React.Fragment, { key: k++ }, this.linkify(str.slice(last)))); return out;
+  }
+  renderAnswer(text, final) {
+    const found = { cites: new Set(), ok: 0, bad: 0 }, kids = []; let list = null, para = [], k = 0;
+    const el = (t, s, c) => React.createElement(t, { key: k++, style: s }, c);
+    const flush = () => { if (para.length) { kids.push(el('p', { margin: '0 0 12px' }, this.inline(para.join(' '), final, found))); para = []; } };
+    text.split('\n').forEach(raw => { const line = raw.trim(); let m;
+      if (!line) { flush(); list = null; return; }
+      if ((m = line.match(/^#{1,4}\s+(.*)$/))) { flush(); list = null; kids.push(el('h4', { fontSize: 18, fontWeight: 700, color: 'var(--text-heading)', margin: '18px 0 6px' }, this.inline(m[1], final, found))); return; }
+      if ((m = line.match(/^(?:[-*•]|\d+[.)])\s+(.*)$/))) { flush(); const ord = /^\d/.test(line);
+        if (!list || list.tag !== (ord ? 'ol' : 'ul')) { list = { tag: ord ? 'ol' : 'ul', items: [] }; kids.push(list); }
+        list.items.push(el('li', { marginBottom: 6 }, this.inline(m[1], final, found))); return; }
+      list = null; para.push(line); });
+    flush();
+    const nodes = kids.map(x => x.tag ? React.createElement(x.tag, { key: k++, style: { margin: '0 0 12px', paddingLeft: 22 } }, x.items) : x);
+    return { el: React.createElement('div', null, nodes), found };
+  }
+  setAsk(patch) { this.setState(s => ({ ask: Object.assign({}, s.ask, patch) })); }
+  async runAsk() {
+    const a = this.state.ask, q = (a.q || '').trim(), canComplete = window.claude && typeof window.claude.complete === 'function';
+    if (!q || a.busy || !(this.sampleFn || canComplete || this.askEndpoint)) return;
+    this.ctl = new AbortController(); this.setAsk({ busy: true, text: '', final: false, err: '', status: 'Thinking…' });
+    const p = this.buildPrompt(q), ctl = this.ctl;
+    try {
+      if (this.sampleFn) {
+        const r = await this.sampleFn(p.joined, { signal: ctl.signal, onText: u => this.setAsk({ text: u.text, status: 'Writing…' }) });
+        this.setAsk({ text: r.text, final: true, status: r.truncated ? 'Cut short. Ask for less at a time.' : '' });
+      } else if (canComplete) {
+        const text = await window.claude.complete({ system: p.system, messages: [{ role: 'user', content: p.user }], max_tokens: 1500 });
+        if (ctl.signal.aborted) return;
+        if (!text) throw { code: 'empty_completion' };
+        this.setAsk({ text: String(text), final: true, status: '' });
+      } else {
+        // Self-hosted proxy. Streams text/plain chunks; falls back to a JSON {text} body.
+        const res = await fetch(this.askEndpoint, { method: 'POST', signal: ctl.signal, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ system: p.system, question: p.user, max_tokens: 1500 }) });
+        if (!res.ok) { let code = 'upstream_error'; try { code = (await res.json()).code || code; } catch (e) {} if (res.status === 429) code = 'rate_limited'; throw { code }; }
+        const ctype = res.headers.get('content-type') || '';
+        if (ctype.indexOf('application/json') >= 0) { const j = await res.json(); if (!j.text) throw { code: 'empty_completion' }; this.setAsk({ text: j.text, final: true, status: '' }); }
+        else { const reader = res.body.getReader(), dec = new TextDecoder(); let acc = '';
+          while (true) { const { value, done } = await reader.read(); if (done) break; acc += dec.decode(value, { stream: true }); this.setAsk({ text: acc, status: 'Writing…' }); }
+          if (!acc) throw { code: 'empty_completion' }; this.setAsk({ text: acc, final: true, status: '' }); }
+      }
+    } catch (e) {
+      if (ctl.signal.aborted) return;
+      const code = e && e.code, text = code === 'refused' ? '' : ((e && e.text) || this.state.ask.text || '');
+      this.setAsk({ text, final: !!text, status: '', err: code === 'cancelled' ? '' : (this.ERR[code] || this.ERR.upstream_error) });
+      if (code === 'not_granted' || code === 'sampling_disabled' || code === 'not_declared' || code === 'capability_disabled') { this.sampleFn = null; this.setState({ hasSample: false }); }
+    } finally { if (this.ctl === ctl) this.ctl = null; this.setAsk({ busy: false }); }
+  }
+
+  renderVals() {
+    const { data, route, plain, hasSample } = this.state, page = route.page;
+    const mentiCode = (this.props.mentiCode ?? '88258238').trim(), mentiUrl = (this.props.mentiUrl ?? 'https://www.menti.com/?code=88258238').trim() || (mentiCode ? 'https://www.menti.com/?code=' + mentiCode.replace(/\s+/g, '') : 'https://www.menti.com/');
+    const v = { loading: !data, plain, hasSample, noSample: !hasSample, mentiUrl, mentiCode, hasMentiCode: !!mentiCode, smallCheck: { fontSize: 14, whiteSpace: 'nowrap' }, cardFill: { height: '100%', minHeight: '100%', boxSizing: 'border-box', display: 'grid', alignItems: 'stretch' },
+      onPlain: c => { const val = typeof c === 'boolean' ? c : !this.state.plain; this.store('lcb-plain', val ? '1' : '0'); this.setState({ plain: val }); },
+      isHome: page === 'home', isReader: page === 'reader', isThemes: page === 'themes', isTheme: page === 'theme', isSessions: page === 'sessions', isSession: page === 'session', isSpeakers: page === 'speakers', isSpeaker: page === 'speaker', isReading: page === 'reading', isAsk: page === 'ask' };
+    const nav = [['#/', 'Home', 'home'], ['#/readers', 'For you', 'reader'], ['#/themes', 'Themes', 'theme'], ['#/sessions', 'Sessions', 'session'], ['#/speakers', 'Speakers', 'speaker'], ['#/reading', 'Learn more', 'reading']];
+    if (hasSample) nav.push(['#/ask', 'Ask the Conference', 'ask']);
+    v.navItems = nav.map(n => ({ href: n[0], label: n[1], active: page.indexOf(n[2]) === 0, inactive: page.indexOf(n[2]) !== 0 }));
+    const crumb = arr => arr.map((c, i) => ({ label: c[0], href: c[1] || '', isLink: !!c[1], isText: !c[1], sep: i > 0 }));
+    v.crumbs = crumb([['Home', page === 'home' ? '' : '#/']]);
+    if (!data) return v;
+    const B = data.blocks, L = data.lenses, T = data.themes, S = this.S, SPK = data.speakers;
+    const spLine = sp => [sp.role, sp.institution].filter(Boolean).join(', ') || 'Affiliation not listed in the program notes';
+    const sessLine = id => S[id].day + ' ' + S[id].time + ' · ' + S[id].kind;
+    const types = {}; B.forEach(b => types[b.type] = (types[b.type] || 0) + 1);
+    v.counts = [B.length + ' blocks', Object.keys(S).length + ' sessions', SPK.length + ' speakers'];
+    const first = s => (s.match(/^[^.?!]+[.?!]/) || [s])[0];
+
+    if (page === 'home') {
+      v.askQ = this.state.ask.q; v.onAskInput = e => this.setAsk({ q: e.target.value });
+      v.homeAsk = () => { location.hash = '#/ask'; if ((this.state.ask.q || '').trim()) setTimeout(() => this.runAsk(), 50); };
+      v.onHomeAskKey = e => { if (e.key === 'Enter') { e.preventDefault(); v.homeAsk(); } };
+      v.readerCards = L.map(l => ({ name: l.name, first: first(l.intro), href: '#/readers/' + l.id }));
+      v.doors = [{ count: T.length, label: 'Themes', sum: 'The conference\'s ideas, grouped, with a note for each role.', href: '#/themes' },
+        { count: Object.keys(S).length, label: 'Sessions', sum: 'Who said what, in the order it was said.', href: '#/sessions' },
+        { count: SPK.length, label: 'Speakers', sum: 'Everyone who presented, with their talks and every block drawn from them.', href: '#/speakers' },
+        { count: types.tension, label: 'Open questions', sum: 'Where speakers disagreed and what nobody addressed.', href: '#/readers/all/skeptic' },
+        { count: data.reading.groups.reduce((n, g) => n + g.items.length, 0) + data.reading.own.length, label: 'Learn more', sum: 'The books and essays speakers reached for, and who reached for them.', href: '#/reading' }];
+      if (hasSample) v.doors.push({ count: 'Live', label: 'Ask the Conference', sum: 'Any question, answered from the blocks and nothing else.', href: '#/ask' });
+    }
+    if (page === 'reader') {
+      const l = route.lens, f = route.fmt, Lz = this.LN[l], F = this.FORMATS.find(x => x[0] === f);
+      v.crumbs = crumb([['Home', '#/'], ['For you', '#/readers'], [Lz.name]]);
+      v.readerName = Lz.name; v.readerIntro = this.linkify(Lz.intro); v.fmtKicker = this.KICKER[f]; v.fmtDesc = F[2];
+      v.lensChips = this.lensChips(l, id => this.go('#/readers/' + id + '/' + f));
+      v.fmtTabs = this.FORMATS.map(x => ({ label: x[1], variant: x[0] === f ? 'primary' : 'secondary', go: this.go('#/readers/' + l + '/' + x[0]) }));
+      v.isBrief = f === 'brief'; v.isDeep = f === 'deep'; v.isMonday = f === 'monday'; v.isSkeptic = f === 'skeptic';
+      const nb = pairs => pairs.map(p => ({ label: p[1], go: this.go('#/readers/' + l + '/' + p[0]) }));
+      if (v.isBrief) {
+        const pool = this.sorted(B.filter(b => b.type !== 'tension' && this.w(b, l) >= 2), l), pick = [], per = {};
+        for (const b of pool) { if (pick.length >= 8) break; per[b.theme] = per[b.theme] || 0; if (per[b.theme] >= 2) continue; per[b.theme]++; pick.push(b); }
+        pick.sort((a, b) => T.findIndex(t => t.id === a.theme) - T.findIndex(t => t.id === b.theme) || a.i - b.i);
+        v.briefSum = 'The eight blocks most worth this reader\'s time, out of ' + B.length + '.';
+        v.briefPick = this.vms(pick, { theme: true });
+        v.briefTensions = this.vms(this.sorted(B.filter(b => b.type === 'tension' && this.w(b, l) > 0), l).slice(0, 2));
+        v.briefNext = nb([['monday', 'What to do Monday'], ['deep', 'Everything, by theme'], ['skeptic', 'All the open questions']]);
+      }
+      if (v.isDeep) { const rows = T.map(t => [t.name, B.filter(b => b.theme === t.id && this.w(b, l) > 0).length]);
+        v.deepChart = this.countChart('Blocks that matter to ' + Lz.lc + ', by theme', rows, Math.max.apply(null, rows.map(r => r[1]))); }
+      if (v.isDeep) v.deepThemes = T.map(t => { const all = B.filter(b => b.theme === t.id), mine = this.sorted(all.filter(b => this.w(b, l) > 0), l), rest = all.filter(b => this.w(b, l) === 0), note = l !== 'all' && data.notes[l] && data.notes[l][t.id];
+        return { name: t.name, sum: t.sum, href: '#/themes/' + t.id, hasNote: !!note, noteLead: 'For ' + Lz.lc + ': ', note: this.linkify(note || ''), hasMine: mine.length > 0, mine: this.vms(mine), hasRest: rest.length > 0, rest: this.vms(rest), restLabel: rest.length + ' more ' + (rest.length === 1 ? 'block' : 'blocks') + ' in this theme' }; });
+      if (v.isMonday) { v.mondayActions = (data.actions[l] || []).map((a, i) => ({ n: i + 1, t: this.linkify(a.t), why: 'Why: ' + a.b.length + ' ' + (a.b.length === 1 ? 'block' : 'blocks'), blocks: this.vms(a.b.map(id => this.BY[id]), { prefix: 'act-' }) }));
+        v.mondayNext = nb([['brief', 'Back to the briefing'], ['skeptic', 'What could be wrong with this']]); }
+      if (v.isSkeptic) { v.skepticTensions = this.vms(this.sorted(B.filter(b => b.type === 'tension'), l));
+        v.skepticNext = [{ label: 'Back to the briefing', go: this.go('#/readers/' + l + '/brief') }, { label: 'See who said what', go: this.go('#/sessions') }]; }
+    }
+    if (page === 'themes') { v.crumbs = crumb([['Home', '#/'], ['Themes']]);
+      const rows = T.map(t => [t.name, B.filter(b => b.theme === t.id).length]);
+      v.themesChart = this.countChart('Blocks per theme, out of ' + B.length, rows, Math.max.apply(null, rows.map(r => r[1])));
+      v.themeCards = T.map(t => { const n = B.filter(b => b.theme === t.id).length; return { name: t.name, sum: t.sum, href: '#/themes/' + t.id, countLabel: n + ' blocks' }; }); }
+    if (page === 'theme') {
+      const i = T.findIndex(t => t.id === route.id), t = T[i], all = B.filter(b => b.theme === t.id), sids = [];
+      all.forEach(b => { if (b.s && sids.indexOf(b.s) < 0) sids.push(b.s); });
+      v.crumbs = crumb([['Home', '#/'], ['Themes', '#/themes'], [t.name]]);
+      v.theme = { name: t.name, sum: this.linkify(t.sum), blocksTitle: all.length + ' blocks in this theme', blocks: this.vms(all),
+        notes: L.filter(l => data.notes[l.id] && data.notes[l.id][t.id]).map(l => ({ lead: 'For ' + l.lc, text: this.linkify(data.notes[l.id][t.id]), href: '#/readers/' + l.id + '/deep' })),
+        sessions: sids.map(id => ({ href: '#/sessions/' + id, who: S[id].who, title: S[id].title })),
+        hasPrev: i > 0, prevHref: i > 0 ? '#/themes/' + T[i - 1].id : '', prevName: i > 0 ? T[i - 1].name : '',
+        hasNext: i < T.length - 1, nextHref: i < T.length - 1 ? '#/themes/' + T[i + 1].id : '', nextName: i < T.length - 1 ? T[i + 1].name : '' };
+      v.theme.hasNotes = v.theme.notes.length > 0; v.theme.askHref = '#/ask/theme/' + t.id;
+    }
+    if (page === 'sessions') { v.crumbs = crumb([['Home', '#/'], ['Sessions']]); const days = [];
+      const maxS = Math.max.apply(null, Object.keys(S).map(id => B.filter(b => b.s === id).length)) || 1;
+      Object.keys(S).forEach(id => { const s = S[id]; let d = days.find(x => x.key === s.day); if (!d) { d = { key: s.day, label: this.DAYS[s.day], sessions: [] }; days.push(d); }
+        const n = B.filter(b => b.s === id).length; d.sessions.push({ href: '#/sessions/' + id, time: s.time, who: s.who, title: s.title + (s.org ? ' · ' + s.org : ''), countLabel: n ? n + (n === 1 ? ' block' : ' blocks') : 'no blocks', pct: Math.round(n / maxS * 100) }); });
+      v.sessionDays = days; }
+    if (page === 'session') {
+      const ids = Object.keys(S), i = ids.indexOf(route.id), s = S[route.id], bl = B.filter(b => b.s === route.id);
+      v.crumbs = crumb([['Home', '#/'], ['Sessions', '#/sessions'], [s.who]]);
+      const sps = SPK.filter(sp => sp.sessions.indexOf(route.id) >= 0);
+      v.session = { who: s.who, title: s.title, org: s.org || '', when: this.DAYS[s.day] + ' · ' + s.time + ' · ' + s.kind,
+        speakers: sps.map(sp => ({ name: sp.name, line: spLine(sp), href: '#/speakers/' + sp.id })), hasSpeakers: sps.length > 0, askHref: '#/ask/session/' + route.id, blocksTitle: bl.length ? bl.length + ' blocks from this session' : 'Blocks from this session', hasBlocks: bl.length > 0, noBlocks: bl.length === 0, blocks: this.vms(bl, { theme: true }),
+        hasPrev: i > 0, prevHref: i > 0 ? '#/sessions/' + ids[i - 1] : '', prevWho: i > 0 ? S[ids[i - 1]].who : '',
+        hasNext: i < ids.length - 1, nextHref: i < ids.length - 1 ? '#/sessions/' + ids[i + 1] : '', nextWho: i < ids.length - 1 ? S[ids[i + 1]].who : '' };
+    }
+    if (page === 'speakers') { v.crumbs = crumb([['Home', '#/'], ['Speakers']]);
+      v.speakerCards = SPK.map(sp => { const n = B.filter(b => this.isBy(b, sp)).length;
+        return { name: sp.name, line: spLine(sp), href: '#/speakers/' + sp.id, talks: sp.sessions.map(id => S[id].title).join(' · '), countLabel: n ? n + (n === 1 ? ' block' : ' blocks') : 'No blocks drawn' }; }); }
+    if (page === 'speaker') {
+      const sp = this.SP[route.id], i = SPK.indexOf(sp), by = B.filter(b => this.isBy(b, sp)), re = new RegExp('\\b(' + sp.aliases.map(a => a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')\\b');
+      const mentions = B.filter(b => !this.isBy(b, sp) && (re.test(b.text) || re.test(b.ctx || '') || re.test(b.who || '')));
+      v.crumbs = crumb([['Home', '#/'], ['Speakers', '#/speakers'], [sp.name]]);
+      const cited = []; data.reading.groups.forEach(g => g.items.forEach(it => { if (this.speakersIn(it.where).some(x => x.id === sp.id)) cited.push({ title: it.title, author: it.author, where: this.linkify(it.where, sp.id), hasAuthor: !!it.author }); }));
+      const own = data.reading.own.filter(o => o.speaker === sp.id).map(o => ({ title: o.title, note: o.note }));
+      v.speaker = { name: sp.name, askHref: '#/ask/speaker/' + sp.id, hasRole: !!sp.role,
+        hasCited: cited.length > 0, cited, citedTitle: cited.length + (cited.length === 1 ? ' work they brought up' : ' works they brought up'), hasOwn: own.length > 0, own, role: sp.role, hasInst: !!sp.institution, institution: sp.institution, noAffil: !sp.role && !sp.institution,
+        talks: sp.sessions.map(id => ({ href: '#/sessions/' + id, title: S[id].title, when: sessLine(id), with: S[id].who !== sp.name ? 'With ' + S[id].who : '' })),
+        talksTitle: sp.sessions.length === 1 ? 'Talk' : 'Talks',
+        hasBlocks: by.length > 0, noBlocks: by.length === 0, blocksTitle: by.length + (by.length === 1 ? ' block from ' : ' blocks from ') + sp.name, blocks: this.vms(by, { theme: true }),
+        hasMentions: mentions.length > 0, mentionsTitle: 'Mentioned in ' + mentions.length + (mentions.length === 1 ? ' other block' : ' other blocks'), mentions: this.vms(mentions, { theme: true }),
+        hasPrev: i > 0, prevHref: i > 0 ? '#/speakers/' + SPK[i - 1].id : '', prevName: i > 0 ? SPK[i - 1].name : '',
+        hasNext: i < SPK.length - 1, nextHref: i < SPK.length - 1 ? '#/speakers/' + SPK[i + 1].id : '', nextName: i < SPK.length - 1 ? SPK[i + 1].name : '' };
+    }
+    if (page === 'reading') { v.crumbs = crumb([['Home', '#/'], ['Learn more']]); const R = data.reading;
+      v.readingGroups = R.groups.map(g => ({ title: g.title, sum: g.sum, hasSum: !!g.sum, columns: ['Book', 'Author', 'Who brought it up'],
+        rows: g.items.map(it => [React.createElement('span', null, it.title, it.note ? React.createElement('span', { style: { display: 'block', fontWeight: 400, color: 'var(--text-muted)', fontSize: 13 } }, it.note) : null), it.author || '—', this.linkify(it.where)]) }));
+      v.ownBooks = R.own.map(o => { const sp = this.SP[o.speaker]; return { title: o.title, note: o.note, name: sp.name, line: spLine(sp), href: '#/speakers/' + sp.id }; }); }
+    if (page === 'ask') {
+      const a = this.state.ask, Lz = this.LN[this.state.askLens], sc = this.scopeInfo(route.scope);
+      v.crumbs = crumb([['Home', '#/'], ['Ask the Conference']]);
+      v.askIntro = 'Ask anything about the conference in your own words. The answer draws on the ' + B.length + ' blocks and the rules, and nothing else. Every answer cites the blocks it rests on, and those blocks are pulled up under it so you can check the originals.';
+      v.askHasScope = !!sc; v.askScopeLabel = sc ? sc.label : ''; v.askScopeHref = sc ? sc.href : ''; v.askScopeCount = sc ? sc.ids.length + (sc.ids.length === 1 ? ' block' : ' blocks') : ''; v.clearScope = this.go('#/ask');
+      v.askLensChips = this.lensChips(this.state.askLens, id => () => { this.store('lcb-lens', id); this.setState({ askLens: id }); });
+      v.askQ = a.q; v.onAskInput = e => this.setAsk({ q: e.target.value });
+      v.onAskKey = e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); this.runAsk(); } };
+      const sugg = sc ? ['Sum this up in three sentences.', 'What did ' + (route.scope.kind === 'speaker' ? 'they' : 'the speakers') + ' actually recommend doing?', 'What here is evidence, and what is opinion?', 'How does this connect to the rest of the conference?', 'What would a skeptic say about this?'] : this.SUGGEST;
+      v.askSuggest = sugg.map(s => ({ label: s, go: () => this.setAsk({ q: s }) }));
+      v.askHint = (this.sampleFn || this.askEndpoint) ? 'Answers stream in as they are written.' : 'Answers arrive in one piece after a few seconds.';
+      v.askBusy = a.busy; v.askGoLabel = 'Ask, as ' + Lz.lc; v.runAsk = () => this.runAsk(); v.stopAsk = () => this.ctl && this.ctl.abort();
+      v.askStatus = a.status; v.askHasErr = !!a.err; v.askErr = a.err; v.askAnswer = null; v.askHasUsed = false;
+      if (a.text) { const r = this.renderAnswer(a.text, a.final); v.askAnswer = r.el;
+        if (a.final) { const used = [...r.found.cites].map(id => this.BY[id]).sort((x, y) => x.i - y.i);
+          v.askHasUsed = used.length > 0; v.askUsedSum = used.length + ' of ' + B.length + '. These are the checked originals.'; v.askUsed = this.vms(used, { prefix: 'used-', theme: true }); } }
+    }
+    return v;
+  }
+}
+</script>
+</body>
+</html>
